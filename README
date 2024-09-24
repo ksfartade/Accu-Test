@@ -1,0 +1,55 @@
+Steps to follow:
+1. Clone repo
+2. Create virtual environment and then activate it:  python3 -m venv venv; source venv/bin/activate
+3. Install requirements: pip install -r requirements.txt
+4. create django project: django-admin startproject signals .
+5. Run migrations: python3 manage.py migrate
+6. Run server: python3 manage.py runserver
+
+Check url endpoint: 
+localhost:8000/api/question1
+localhost:8000/api/question2
+localhost:8000/api/question3
+
+
+Question 1: By default are django signals executed synchronously or asynchronously? Please support your answer with a code snippet that conclusively proves your stance. The code does not need to be elegant and production ready, we just need to understand your logic.
+
+Ans: By default, Django signals are executed synchronously. This means that when a signal is sent and its receivers are called, they are executed in the same thread and in the same process as the signal sender, blocking the flow of the program until they finish execution.
+
+
+Question 2: Do django signals run in the same thread as the caller? Please support your answer with a code snippet that conclusively proves your stance. The code does not need to be elegant and production ready, we just need to understand your logic.
+
+Ans: Yes, by default, Django signals run in the same thread as the caller. This means that the signal receiver is executed in the same execution context as the code that sends the signal.
+
+
+Question 3: By default do django signals run in the same database transaction as the caller? Please support your answer with a code snippet that conclusively proves your stance. The code does not need to be elegant and production ready, we just need to understand your logic.
+
+Ans: Yes, by default, Django signals are executed within the same database transaction as the caller. This means if the signal is triggered within a database transaction and the transaction fails, any changes made by the signal handlers will also be rolled back. Similarly, if the transaction succeeds, the changes made by both the caller and the signal handlers are committed together.
+
+
+Topic: Custom Classes in Python
+
+Description: You are tasked with creating a Rectangle class with the following requirements:
+
+An instance of the Rectangle class requires length:int and width:int to be initialized.
+We can iterate over an instance of the Rectangle class 
+When an instance of the Rectangle class is iterated over, we first get its length in the format: {'length': <VALUE_OF_LENGTH>} followed by the width {width: <VALUE_OF_WIDTH>}
+
+Ans code: 
+class Rectangle:
+    def __init__(self, length: int, width: int):
+        self.length = length
+        self.width = width
+
+    # __iter__ method to make the class iterable
+    def __iter__(self):
+        # We yield the length first, followed by the width
+        yield {'length': self.length}
+        yield {'width': self.width}
+
+# Example usage:
+rect = Rectangle(10, 20)
+
+# Iterating over the instance
+for dimension in rect:
+    print(dimension)
